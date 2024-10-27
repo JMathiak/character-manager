@@ -1,0 +1,21 @@
+Table - Characters
+Character Name - UNIQUE
+Job
+Level
+Combat Power
+Owner
+Server
+
+Table- Players
+Name - UNIQUE
+Legion - Cumulative levels for the same server
+Server
+
+Table - Server
+Name
+Type
+
+VIEW : Characters / Players / Server
+Server View: Display all characters or view only one players characters for that server
+Character View: View list of all characters with detail page for each
+Players: View list of players, detail page that shows all characters for that player
