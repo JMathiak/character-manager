@@ -1,14 +1,14 @@
 Table - Characters
+Player Username
 Character Name - UNIQUE
 Job
 Level
 Combat Power
-Owner
 Server
 
 Table- Players
-Name - UNIQUE
-Legion - Cumulative levels for the same server
+username - UNIQUE
+Legion - Cumulative levels for the same server - Probably a query for a view and not in the database
 Server
 
 Table - Server
@@ -19,3 +19,12 @@ VIEW : Characters / Players / Server
 Server View: Display all characters or view only one players characters for that server
 Character View: View list of all characters with detail page for each
 Players: View list of players, detail page that shows all characters for that player
+
+
+Players belong to Servers, Players have characters on one or multiple servers
+
+Delete characters
+Delete players, Deletes characters associated
+Can add players, characters, cant add servers
+Stock images for each different type of job a character can be
+
