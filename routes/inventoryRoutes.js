@@ -5,7 +5,7 @@ const invRouter = Router()
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
 
 invRouter.get("/", invDBController.getHome)
-// invRouter.get("/players",)
+invRouter.get("/players", invDBController.getPlayers)
 // invRouter.get("/characters",)
 invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {serverArr: servers})

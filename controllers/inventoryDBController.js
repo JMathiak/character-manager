@@ -15,7 +15,22 @@ async function createPlayer(req, res){
 }
 
 
+async function getPlayers(req, res){
+    let rows = await db.getPlayers()
+    rows.forEach(player => {
+        let serverArr = player.servers.split(",")
+        console.log(serverArr)
+        player.servers = serverArr
+    })
+    console.log(rows)
+    res.render('./players',{
+        players: rows
+    })
+}
+
+
 module.exports = {
     getHome,
-    createPlayer
+    createPlayer,
+    getPlayers
 }
