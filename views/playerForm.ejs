@@ -1,0 +1,35 @@
+<!-- <h1>Add A New Player</h1>
+<form action="/createPlayer" method="POST">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required><br>
+    <h2>Server (Pick at least one)</h2>
+    <input type="checkbox" id="server1" name="server1" value="Kronos">
+    <label for="server1">Kronos (Heroic) </label>
+    <input type="checkbox" id="server2" name="server2" value="Hyperion">
+    <label for="server2">Hyperion (Heroic) </label>
+    <input type="checkbox" id="server3" name="server3" value="Bera">
+    <label for="server3">Bera (Interactive) </label>
+    <input type="checkbox" id="server4" name="server4" value="Scania">
+    <label for="server4">Scania (Interactive) </label>
+    <input type="checkbox" id="server5" name="server5" value="Aurora">
+    <label for="server5">Aurora (Interactive) </label>
+    <input type="checkbox" id="server6" name="server6" value="Elysium">
+    <label for="server6">Elysium (Interactive) </label>
+    <input type="submit" value="Submit">
+</form> -->
+
+<h1>Add A New Player</h1>
+<form action="/createPlayer" method="POST">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required><br>
+    <h2>Server (Pick at least one)</h2>
+    <% serverArr.forEach((server, i)=> { %>
+        <input type="checkbox" id="server<%=i %>" name="server" value="<%=server %>">
+        <label for="server">
+            <%= server %>
+        </label>
+
+
+        <% }) %>
+            <input type="submit" value="Submit">
+</form>

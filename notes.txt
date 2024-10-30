@@ -1,19 +1,20 @@
 Table - Characters
-Player Username
-Character Name - UNIQUE
-Job
-Level
-Combat Power
-Server
+Player Username - VARCHAR (15)
+Character Name - UNIQUE - VARCHAR(12)
+Job - VARCHAR(30)
+Level - SMALLINT
+Combat Power - INT
+Server - VARCHAR
 
 Table- Players
-username - UNIQUE
-Legion - Cumulative levels for the same server - Probably a query for a view and not in the database
-Server
+username - VARCHAR(15)
+Server - VARCHAR(8)
+Composite key of username, server
+When listing players out select distinct 
 
 Table - Server
-Name
-Type
+Name - VARCHAR(8)
+Type - Heroic or Interactive - VARCHAR(11)
 
 VIEW : Characters / Players / Server
 Server View: Display all characters or view only one players characters for that server
@@ -28,3 +29,15 @@ Delete players, Deletes characters associated
 Can add players, characters, cant add servers
 Stock images for each different type of job a character can be
 
+Edit player route -> edit playername? add char, select multiple chars to remove, add server, remove server
+Edit character route -> edit char name, level, combat power, server, job
+
+let arr = [	"Hero", "Dark Knight", "Paladin", "Bishop", "Arch Mage (Fire & Poison)", "Arch Mage (Ice & Lightning)", "Night Lord", "Shadower", "Bowmaster", "Marksman", "Buccaneer", "Corsair", "Blade Master", "Cannon Master", 
+"Mechanic", "Battle Mage", "Demon Slayer", "Demon Avenger", "Wild Hunter", "Xenon", "Blaster", "Mercedes", "Aran", "Phantom", "Luminous", "Evan", "Shade", "Kanna", "Hayato", "Angelic Buster", "Kaiser", "Cadena", "Kain", "Ark", "Illium", "Adele", "Khali", 
+"Hoyoung", "Lara", "Lynn", "Zero", "Kinesis"]
+
+^ Array of all classes
+Longest class is I/l - 27 length
+
+let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
+Longest  server is Hyperion - 8 length
