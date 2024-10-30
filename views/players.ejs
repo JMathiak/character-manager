@@ -1,0 +1,16 @@
+<html>
+
+<head>
+    <title>Players</title>
+</head>
+
+<body>
+    <ul>
+        <% players.forEach((player)=> { %>
+            <%- include('./partials/player', {player: player.username, servers: player.servers}); %>
+
+                <% }) %>
+    </ul>
+</body>
+
+</html>
