@@ -1,13 +1,15 @@
-
+const db = require("../db/queries")
 
 function getHome(req, res){
     res.render('index')
 }
 
-function createPlayer(req, res){
+async function createPlayer(req, res){
     let username = req.body.username
     let servers  = req.body.server
-    console.log(username, servers)
+    for(const server of servers){
+        await db.insertPlayer(username, server)
+    }
     res.redirect('/')
 
 }
