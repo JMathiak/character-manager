@@ -1,15 +1,18 @@
 <html>
 
 <head>
-    <title>Players</title>
+    <title><%- title %></title>
 </head>
 
 <body>
     <ul>
         <% players.forEach((player)=> { %>
-            <%- include('./partials/player', {player: player.username, servers: player.servers}); %>
+            <li>Username: <%- player.username %>
+                    <% if(player.servers !=null){ %>Servers: <%- player.servers %>
+                            <% } %><a href="<%= route %>/<%= player.username %>"><%- routeText %>
+                                        <%= player.username %></a></li>
 
-                <% }) %>
+            <% }) %>
     </ul>
 </body>
 

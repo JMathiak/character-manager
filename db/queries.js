@@ -11,7 +11,7 @@ async function getPlayers(){
     return rows
 }
 async function getUsernames(){
-    const { rows } = await pool.query('SELECT username FROM players')
+    const { rows } = await pool.query('SELECT DISTINCT username FROM players')
     return rows
 }
 async function getServers(username){
@@ -20,5 +20,6 @@ async function getServers(username){
 }
 module.exports = {
     insertPlayer,
-    getPlayers
+    getPlayers,
+    getUsernames
 }
