@@ -15,7 +15,7 @@ async function createPlayer(req, res){
 }
 
 
-async function getPlayers(req, res){
+async function getPlayersAndServers(req, res){
     let rows = await db.getPlayers()
     rows.forEach(player => {
         let serverArr = player.servers.split(",")
@@ -24,13 +24,34 @@ async function getPlayers(req, res){
     })
     console.log(rows)
     res.render('./players',{
-        players: rows
+        title: "Player List",
+        players: rows,
+        route: '/edit',
+        routeText: 'Edit Player'
     })
+}
+
+async function getPlayers(req, res){
+    let rows = await db.getPlayers()
+    rows.forEach(player => {
+        let serverArr = player.servers.split(",")
+        console.log(serverArr)
+        player.servers = serverArr
+    })
+    res.render('players',{
+        title: 'Create Char - Player Select',
+        players:rows,
+        route: "/createCharacter",
+        routeText: 'Create Character For'
+    })
+
 }
 
 
 module.exports = {
     getHome,
     createPlayer,
+    getPlayersAndServers,
     getPlayers
+
 }

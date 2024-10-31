@@ -5,13 +5,13 @@ const invRouter = Router()
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
 
 invRouter.get("/", invDBController.getHome)
-invRouter.get("/players", invDBController.getPlayers)
+invRouter.get("/players", invDBController.getPlayersAndServers)
 // invRouter.get("/characters",)
 invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {serverArr: servers})
 })
 invRouter.post("/createPlayer", invDBController.createPlayer)
-// invRouter.get("/createCharacter",)
+invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
 // invRouter.post("/createCharacter",)
 // invRouter.get("/:playerName/edit",)
 // invRouter.post("/:playerName/edit",)
