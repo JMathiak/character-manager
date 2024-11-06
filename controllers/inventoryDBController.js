@@ -80,7 +80,7 @@ async function createCharacter (req, res){
                 errors: errors.array()
             })
         }
-        console.log(req.body)
+        console.log(req.body, req.params)
         res.redirect("/")
 }
 // const createCharacter = async [validateCharacter, (req, res) =>{

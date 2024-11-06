@@ -16,7 +16,7 @@ invRouter.get("/createPlayer", (req, res)=>{
 invRouter.post("/createPlayer", invDBController.createPlayer)
 invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
 invRouter.get("/:playerName/createCharacter", invDBController.postCharacterForm)
-invRouter.post("/createCharacter", body('charName').trim()
+invRouter.post("/:playerName/createCharacter", body('charName').trim()
 .isLength({min: 4, max: 15}).withMessage(`Character name ${lengthErr}`),
 body('level').trim()
 .isNumeric().withMessage(`Character level ${numericErr}`)

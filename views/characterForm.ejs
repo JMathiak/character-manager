@@ -8,7 +8,7 @@
     <h1>Add A New Character</h1>
     <%- include("partials/errors.ejs") %>
         <% if (!locals.errors) {%>
-            <form action="/createCharacter" method="POST">
+            <form action="/<%= playerName %>/createCharacter" method="POST">
                 <h2>Creating Character for: <%= playerName %>
                 </h2>
                 <label for="charName">Character Name:</label>
