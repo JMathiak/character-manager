@@ -9,7 +9,7 @@
         <% players.forEach((player)=> { %>
             <li>Username: <%- player.username %>
                     <% if(player.servers !=null){ %>Servers: <%- player.servers %>
-                            <% } %><a href="<%= route %>/<%= player.username %>"><%- routeText %>
+                            <% } %><a href="/<%= player.username %><%= route %>"><%- routeText %>
                                         <%= player.username %></a></li>
 
             <% }) %>

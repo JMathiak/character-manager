@@ -21,5 +21,6 @@ async function getServers(username){
 module.exports = {
     insertPlayer,
     getPlayers,
-    getUsernames
+    getUsernames,
+    getServers
 }

@@ -12,7 +12,7 @@ invRouter.get("/createPlayer", (req, res)=>{
 })
 invRouter.post("/createPlayer", invDBController.createPlayer)
 invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
-// invRouter.post("/createCharacter",)
+invRouter.get("/:playerName/createCharacter", invDBController.postCharacterForm)
 // invRouter.get("/:playerName/edit",)
 // invRouter.post("/:playerName/edit",)
 // invRouter.get("/:playerName/delete",)
