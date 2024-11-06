@@ -57,11 +57,19 @@ async function postCharacterForm(req, res){
     res.render('characterForm', {playerName: playerName, servers: servers, jobs: jobs})
 }
 
+const lengthErr = "must be between 4 and 15 characters"
+const numericErr = 'must be a number'
+const levelRangeErr = 'must be between 1 and 300 (inclusive)'
+const bigIntErr = 'must be between 0 and 2,147,483,647'
 const validateCharacter = [
     body('charName').trim()
-    .isLength({min: 4, max: 15}).withMessage(``),
+    .isLength({min: 4, max: 15}).withMessage(`Character name ${lengthErr}`),
     body('level').trim()
-    .isNumeric
+    .isNumeric().withMessage(`Character level ${numericErr}`)
+    .isInt({min: 1, max: 300}).withMessage(`Character level ${levelRangeErr}`),
+    body('combatPower').trim()
+    .isNumeric().withMessage(`Combat power ${numericErr}`)
+    .isInt({min: 0, max: 2147483647 }).withMessage(`Combat power ${bigIntErr}`)
 ]
 module.exports = {
     getHome,
