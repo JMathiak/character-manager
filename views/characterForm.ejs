@@ -6,34 +6,36 @@
 
 <body>
     <h1>Add A New Character</h1>
-
-    <form action="/createCharacter" method="POST">
-        <h2>Creating Character for: <%= playerName %>
-        </h2>
-        <label for="charName">Character Name:</label>
-        <input type="text" id="charName" name="charName" required><br>
-        <p style="display: inline;">Server</p>
-        <select name="servers" id="servers" style="display: inline;">
-            <% servers.forEach(server=> { %>
-                <option value="<%=server.server %>">
-                    <%=server.server %>
-                </option>
-                <% }) %>
-        </select> <br>
-        <p style="display: inline;">Job: </p>
-        <select name="jobs" id="jobs">
-            <% jobs.forEach(job=> { %>
-                <option value="<%= job %>">
-                    <%= job %>
-                </option>
-                <% }) %>
-        </select><br>
-        <label for="level">Level (1 - 300): </label>
-        <input type="number" id="level" name="level"> <br>
-        <label for="combatPower">Combat Power: </label>
-        <input type="number" name="combatPower" id="combatPower"><br>
-        <input type="submit" value="Submit">
-    </form>
+    <%- include("partials/errors.ejs") %>
+        <% if (!locals.errors) {%>
+            <form action="/createCharacter" method="POST">
+                <h2>Creating Character for: <%= playerName %>
+                </h2>
+                <label for="charName">Character Name:</label>
+                <input type="text" id="charName" name="charName" required><br>
+                <p style="display: inline;">Server</p>
+                <select name="servers" id="servers" style="display: inline;">
+                    <% servers.forEach(server=> { %>
+                        <option value="<%=server.server %>">
+                            <%=server.server %>
+                        </option>
+                        <% }) %>
+                </select> <br>
+                <p style="display: inline;">Job: </p>
+                <select name="jobs" id="jobs">
+                    <% jobs.forEach(job=> { %>
+                        <option value="<%= job %>">
+                            <%= job %>
+                        </option>
+                        <% }) %>
+                </select><br>
+                <label for="level">Level (1 - 300): </label>
+                <input type="number" id="level" name="level"> <br>
+                <label for="combatPower">Combat Power: </label>
+                <input type="number" name="combatPower" id="combatPower"><br>
+                <input type="submit" value="Submit">
+            </form>
+            <% } %>
 </body>
 
 </html>

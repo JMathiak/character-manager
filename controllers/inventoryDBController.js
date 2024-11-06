@@ -71,11 +71,35 @@ const validateCharacter = [
     .isNumeric().withMessage(`Combat power ${numericErr}`)
     .isInt({min: 0, max: 2147483647 }).withMessage(`Combat power ${bigIntErr}`)
 ]
+
+async function createCharacter (req, res){
+    const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).render('characterForm',{
+                title: "Create Character",
+                errors: errors.array()
+            })
+        }
+        console.log(req.body)
+        res.redirect("/")
+}
+// const createCharacter = async [validateCharacter, (req, res) =>{
+//     const errors = validationResult(req)
+//         if(!errors.isEmpty()){
+//             return res.status(400).render('characterForm',{
+//                 title: "Create Character",
+//                 errors: errors.array()
+//             })
+//         }
+//         console.log(req.body)
+// }]
+
 module.exports = {
     getHome,
     createPlayer,
     getPlayersAndServers,
     getPlayers,
-    postCharacterForm
+    postCharacterForm,
+    createCharacter, validateCharacter
 
 }
