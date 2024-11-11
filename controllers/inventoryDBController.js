@@ -1,5 +1,6 @@
 const db = require("../db/queries")
 const {body, validationResult } = require('express-validator')
+const { route } = require("../routes/inventoryRoutes")
 let jobs = [	"Hero", "Dark Knight", "Paladin", "Bishop", "Arch Mage (Fire & Poison)", "Arch Mage (Ice & Lightning)", "Night Lord", "Shadower", "Bowmaster", "Marksman", "Buccaneer", "Corsair", "Blade Master", "Cannon Master", 
     "Mechanic", "Battle Mage", "Demon Slayer", "Demon Avenger", "Wild Hunter", "Xenon", "Blaster", "Mercedes", "Aran", "Phantom", "Luminous", "Evan", "Shade", "Kanna", "Hayato", "Angelic Buster", "Kaiser", "Cadena", "Kain", "Ark", "Illium", "Adele", "Khali", 
     "Hoyoung", "Lara", "Lynn", "Zero", "Kinesis"]
@@ -86,7 +87,11 @@ async function createCharacter (req, res){
         }
         console.log(req.body, req.params)
         await db.insertCharacter(req.body, req.params.playerName)
-        res.redirect("/")
+        res.render("successAdded",{
+            contentAdded: "Character",
+            playerName: req.params.playerName,
+            route: "/createCharacter"
+        })
 }
 // const createCharacter = async [validateCharacter, (req, res) =>{
 //     const errors = validationResult(req)
