@@ -14,7 +14,7 @@ const { Client } = require('pg');
 // `;
 
 const SQL = `
-CREATE TABLE IF NOT EXISTS players (
+CREATE TABLE IF NOT EXISTS characters (
 characterName VARCHAR(12) PRIMARY KEY,
 player VARCHAR(15),
 job VARCHAR(30),

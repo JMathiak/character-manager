@@ -75,12 +75,17 @@ const validateCharacter = [
 async function createCharacter (req, res){
     const errors = validationResult(req)
         if(!errors.isEmpty()){
+            let servers = await db.getServers(req.params.playerName)
             return res.status(400).render('characterForm',{
                 title: "Create Character",
-                errors: errors.array()
+                errors: errors.array(),
+                playerName: req.params.playerName,
+                servers: servers,
+                jobs: jobs,
             })
         }
         console.log(req.body, req.params)
+        await db.insertCharacter(req.body, req.params.playerName)
         res.redirect("/")
 }
 // const createCharacter = async [validateCharacter, (req, res) =>{
