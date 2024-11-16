@@ -28,11 +28,31 @@ async function getPlayer(playerName){
     const { rows } = await pool.query(`SELECT username, STRING_AGG(server,', ') AS servers FROM players WHERE username = ($1) GROUP BY username `, [playerName])
     return rows
 }
+
+async function getCharacterCountByServer(playerName, server)
+{
+    const { rows } = await pool.query(`SELECT COUNT(*) FROM characters WHERE player = ($1) AND server = ($2)`, [playerName, server])
+    return rows
+}
+
+async function updatePlayerName(oldName, newName)
+{
+    await pool.query(`UPDATE players SET username = ($1) WHERE username = ($2)`, [newName, oldName])
+    await pool.query(`UPDATE characters SET player = ($1) WHERE player = ($2)`, [newName, oldName])
+}
+
+async function removeServerForPlayer(playerName, server)
+{
+    await pool.query(`DELETE FROM players WHERE username = ($1) AND server = ($2) `, [playerName, server])
+}
 module.exports = {
     insertPlayer,
     getPlayers,
     getUsernames,
     getServers,
     insertCharacter,
-    getPlayer
+    getPlayer,
+    getCharacterCountByServer,
+    updatePlayerName,
+    removeServerForPlayer
 }

@@ -10,20 +10,22 @@
     </h1>
     <form action="/<%= action %>" method="POST">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required <% if (playerName){ %> value="<%= playerName %>" <% }
-                %>
-                ><br>
-                <h2>Server (Pick at least one)</h2>
-                <% serverArr.forEach((server, i)=> { %>
-                    <input type="checkbox" id="server<%=i %>" name="server" value="<%=server %>" <% if
-                        (playerServers.includes(server)){ %> checked <% } %>>
-                        <label for="server">
-                            <%= server %>
-                        </label>
+        <% //eslint-disable-next-line no-use-before-define %>
+            <input type="text" id="username" name="username" required <% if (locals.playerName){ %> value="<%=
+                playerName %>"<% } %>><br>
+                    <h2>Server (Pick at least one)</h2>
+                    <% serverArr.forEach((server, i)=> { %>
+                        <input type="checkbox" id="server<%=i %>" name="server" value="<%=server %>" <%
+                            if(locals.playerServers){ if (Object.hasOwn(playerServers, server)){ %> checked <% } %>
+                            <% if(playerServers[server]> 0){ %> disabled <% } } %>
+                                    >
+                                    <label for="server">
+                                        <%= server %>
+                                    </label>
 
 
-                        <% }) %>
-                            <input type="submit" value="Submit">
+                                    <% }) %>
+                                        <input type="submit" value="Submit">
     </form>
 </body>
 
