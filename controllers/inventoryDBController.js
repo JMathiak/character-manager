@@ -18,7 +18,8 @@ async function createPlayer(req, res){
     res.render("successAdded",{
         contentAdded: "Player",
         playerName: req.params.playerName,
-        route: "/createPlayer"
+        route: "/createPlayer",
+        viewContent: "/players"
     })
 
 }
@@ -97,7 +98,8 @@ async function createCharacter (req, res){
         res.render("successAdded",{
             contentAdded: "Character",
             playerName: req.params.playerName,
-            route: req.params.playerName + "/createCharacter"
+            route: req.params.playerName + "/createCharacter",
+            viewContent: "/viewCharacters"
         })
 }
 
@@ -178,6 +180,16 @@ async function submitEditPlayer(req, res){
 
     res.redirect("/")
 }
+
+async function getCharacterList(req, res)
+{
+    let rows = await db.getCharacters()
+    console.log(rows)
+    res.render("characterList",{
+        title: 'All Characters',
+        characters: rows
+    })
+}
 // const createCharacter = async [validateCharacter, (req, res) =>{
 //     const errors = validationResult(req)
 //         if(!errors.isEmpty()){
@@ -196,6 +208,7 @@ module.exports = {
     getPlayers,
     postCharacterForm,
     createCharacter, validateCharacter,
-    editPlayer, submitEditPlayer
+    editPlayer, submitEditPlayer,
+    getCharacterList
 
 }

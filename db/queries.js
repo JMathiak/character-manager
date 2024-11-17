@@ -45,6 +45,12 @@ async function removeServerForPlayer(playerName, server)
 {
     await pool.query(`DELETE FROM players WHERE username = ($1) AND server = ($2) `, [playerName, server])
 }
+
+async function getCharacters(){
+    const { rows } = await pool.query(`SELECT * FROM characters`)
+    return rows
+    
+}
 module.exports = {
     insertPlayer,
     getPlayers,
@@ -54,5 +60,6 @@ module.exports = {
     getPlayer,
     getCharacterCountByServer,
     updatePlayerName,
-    removeServerForPlayer
+    removeServerForPlayer,
+    getCharacters
 }
