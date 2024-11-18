@@ -14,9 +14,9 @@ const validateCharacter = [
     body('charName').trim()
     .custom(async value => {
         const character = await db.getCharacter(value)
-        console.log(value)
-        if(character){
-            throw new Error(value + ' already exists')
+        console.log('validator', character)
+        if(character.length > 0){
+            throw new Error('A character with the name ' + value + ' already exists')
         }
     }),
     body('level').trim()
@@ -26,13 +26,25 @@ const validateCharacter = [
     .isNumeric().withMessage(`Combat power ${numericErr}`)
     .isInt({min: 0, max: 2147483647 }).withMessage(`Combat power ${bigIntErr}`)
 ]
+
+const validatePlayer = [
+    body('username').trim()
+    .isLength({min: 4, max: 15}).withMessage(`Username ${lengthErr}`)
+    .custom(async value =>{
+        const player = await db.getPlayerByName(value)
+        if(player.length > 0)
+        {
+            throw new Error('A player with the name ' + value + ' already exists')
+        }
+    })
+]
 invRouter.get("/", invDBController.getHome)
 invRouter.get("/players", invDBController.getPlayersAndServers)
 // invRouter.get("/characters",)
 invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {header: "Add a new", serverArr: servers, action:"createPlayer"})
 })
-invRouter.post("/createPlayer", invDBController.createPlayer)
+invRouter.post("/createPlayer", [validatePlayer] ,invDBController.createPlayer)
 invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
 invRouter.get("/:playerName/createCharacter", invDBController.postCharacterForm)
 invRouter.post("/:playerName/createCharacter", [validateCharacter], invDBController.createCharacter)

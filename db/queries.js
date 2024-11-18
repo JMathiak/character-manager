@@ -58,6 +58,12 @@ async function getCharacter(charName){
     console.log('rows', rows)
     return rows
 }
+
+async function getPlayerByName(playerName)
+{
+    const { rows } = await pool.query(`Select * FROM players where LOWER(username) = LOWER($1)`, [playerName])
+    return rows
+}
 module.exports = {
     insertPlayer,
     getPlayers,
@@ -69,5 +75,6 @@ module.exports = {
     updatePlayerName,
     removeServerForPlayer,
     getCharacters,
-    getCharacter
+    getCharacter,
+    getPlayerByName
 }

@@ -10,9 +10,20 @@ function getHome(req, res){
 }
 
 async function createPlayer(req, res){
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        
+        return res.status(400).render('playerForm',{
+            header: 'Add a new',
+            errors: errors.array(),
+            serverArr: servers, 
+            action:"createPlayer"
+        })
+    }
+    //let servers = await db.getServers(req.params.playerName)
     let username = req.body.username
-    let servers  = req.body.server
-    for(const server of servers){
+    let userServers  = req.body.server
+    for(const server of userServers){
         await db.insertPlayer(username, server)
     }
     res.render("successAdded",{
