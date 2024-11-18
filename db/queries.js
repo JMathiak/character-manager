@@ -20,8 +20,9 @@ async function getServers(username){
 }
 
 async function insertCharacter(body, playerName){
-    console.log('Query', body)
-    await pool.query('INSERT INTO characters (charactername, player, job, level, combatpower, server) VALUES ($1, $2, $3, $4, $5, $6)', [body.charName, playerName, body.jobs, body.level, body.combatPower, body.servers])
+   
+        await pool.query('INSERT INTO characters (charactername, player, job, level, combatpower, server) VALUES ($1, $2, $3, $4, $5, $6)', [body.charName, playerName, body.jobs, body.level, body.combatPower, body.servers])
+       
 }
 
 async function getPlayer(playerName){
@@ -47,9 +48,15 @@ async function removeServerForPlayer(playerName, server)
 }
 
 async function getCharacters(){
-    const { rows } = await pool.query(`SELECT * FROM characters`)
+        const { rows } = await pool.query(`SELECT * FROM characters`)
+        return rows
+}
+
+async function getCharacter(charName){
+    console.log('HERE')
+    const { rows } = await pool.query(`Select * FROM characters WHERE LOWER(charactername) = LOWER(($1))`, [charName])
+    console.log('rows', rows)
     return rows
-    
 }
 module.exports = {
     insertPlayer,
@@ -61,5 +68,6 @@ module.exports = {
     getCharacterCountByServer,
     updatePlayerName,
     removeServerForPlayer,
-    getCharacters
+    getCharacters,
+    getCharacter
 }

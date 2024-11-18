@@ -2,6 +2,7 @@ const { Router } = require('express')
 const invDBController = require("../controllers/inventoryDBController.js")
 const {body, validationResult } = require('express-validator')
 const invRouter = Router()
+const db = require("../db/queries")
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
 const lengthErr = "must be between 4 and 15 characters"
 const numericErr = 'must be a number'
@@ -10,6 +11,14 @@ const bigIntErr = 'must be between 0 and 2,147,483,647'
 const validateCharacter = [
     body('charName').trim()
     .isLength({min: 4, max: 15}).withMessage(`Character name ${lengthErr}`),
+    body('charName').trim()
+    .custom(async value => {
+        const character = await db.getCharacter(value)
+        console.log(value)
+        if(character){
+            throw new Error(value + ' already exists')
+        }
+    }),
     body('level').trim()
     .isNumeric().withMessage(`Character level ${numericErr}`)
     .isInt({min: 1, max: 300}).withMessage(`Character level ${levelRangeErr}`),

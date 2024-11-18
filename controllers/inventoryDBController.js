@@ -93,14 +93,17 @@ async function createCharacter (req, res){
                 jobs: jobs,
             })
         }
-        console.log(req.body, req.params)
+       
         await db.insertCharacter(req.body, req.params.playerName)
         res.render("successAdded",{
             contentAdded: "Character",
             playerName: req.params.playerName,
             route: req.params.playerName + "/createCharacter",
-            viewContent: "/viewCharacters"
+            viewContent: "viewCharacters"
         })
+  
+        
+        
 }
 
 async function editPlayer(req, res){
@@ -183,12 +186,19 @@ async function submitEditPlayer(req, res){
 
 async function getCharacterList(req, res)
 {
-    let rows = await db.getCharacters()
-    console.log(rows)
+  
+        let rows = await db.getCharacters()
+        console.log(rows)
+  
+   
     res.render("characterList",{
         title: 'All Characters',
         characters: rows
     })
+    
+       
+    
+        
 }
 // const createCharacter = async [validateCharacter, (req, res) =>{
 //     const errors = validationResult(req)
