@@ -22,10 +22,23 @@ async function createPlayer(req, res){
     }
     //let servers = await db.getServers(req.params.playerName)
     let username = req.body.username
-    let userServers  = req.body.server
-    for(const server of userServers){
-        await db.insertPlayer(username, server)
-    }
+    let userServers  = []
+    if(typeof req.body.server  === 'string' || req.body.server instanceof String)
+        {
+            userServers.push(req.body.server)
+        }else if(typeof req.body.server === 'array' || req.body.server instanceof Array )
+        {
+            req.body.server.forEach(server => {
+                userServers.push(server)
+            })
+        }
+    console.log(userServers)
+        for(const server of userServers){
+            await db.insertPlayer(username, server)
+        }
+  
+   
+    
     res.render("successAdded",{
         contentAdded: "Player",
         playerName: req.params.playerName,
@@ -139,21 +152,39 @@ async function submitEditPlayer(req, res){
     // If new name differs from old name update entries for old name in servers + characters
     // What to do if server is removed where they own a character?
     // !! only let them remove servers where they have no characters
+    let errors = validationResult(req)
+    let edits = req.body
     let playerName = req.params.playerName
     let player = await db.getPlayer(playerName)
     let oldServers = player[0].servers.split(", ")
-    let edits = req.body
+    console.log('Old', oldServers)
     let newServers = []
     let serverCharacters = {}
     for (const server of oldServers)
         {
             let count = await db.getCharacterCountByServer(req.params.playerName, server)
+            serverCharacters[server] = parseInt(count[0].count)
             if(parseInt(count[0].count) > 0)
             {
                 newServers.push(server)
             }
             
         }
+        //There is an error, param name (current acc) != edited name
+        //Validator will check if new name is taken and if name is valid?
+    if(!errors.isEmpty() && edits.username !== playerName){
+        console.log(servers)
+        console.log(oldServers)
+        return res.status(400).render('playerForm',{
+            header: "Edit",
+            errors: errors.array(),
+            playerName: player[0].username, 
+            playerServers: serverCharacters, 
+            serverArr: servers, 
+            action: player[0].username + "/edit"})
+        }
+    
+
             
     
     if(typeof edits.server === 'string' || edits.server instanceof String)

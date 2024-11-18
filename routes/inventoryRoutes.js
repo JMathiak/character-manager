@@ -38,6 +38,7 @@ const validatePlayer = [
         }
     })
 ]
+
 invRouter.get("/", invDBController.getHome)
 invRouter.get("/players", invDBController.getPlayersAndServers)
 // invRouter.get("/characters",)
@@ -49,7 +50,7 @@ invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
 invRouter.get("/:playerName/createCharacter", invDBController.postCharacterForm)
 invRouter.post("/:playerName/createCharacter", [validateCharacter], invDBController.createCharacter)
 invRouter.get("/:playerName/edit", invDBController.editPlayer)
-invRouter.post("/:playerName/edit", invDBController.submitEditPlayer)
+invRouter.post("/:playerName/edit", [validatePlayer] ,invDBController.submitEditPlayer)
 invRouter.get("/viewCharacters", invDBController.getCharacterList)
 // invRouter.get("/:playerName/delete",)
 // invRouter.get("/:playerName/:characterName/edit",)
@@ -61,3 +62,16 @@ invRouter.get("/viewCharacters", invDBController.getCharacterList)
 
 
 module.exports = invRouter;
+
+
+//Edit flow
+/*
+Og player gets updated in controller file
+New player name != exisiting player name
+If body.name doesn't change -> ? 
+
+If error array is not empty -> length could be messed up, duplicate username could exist
+Condition to render errors -> error array not empty && edit username is a new username
+If edited username same as param -> same user, OK
+if edited username not same as param -> user hasnt changed, new username, OK if new usernamne DNE otherwise NOT OK
+*/
