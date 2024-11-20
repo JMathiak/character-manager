@@ -263,7 +263,6 @@ async function deletePlayer(req, res)
         await db.deletePlayer(playerName)
    
        
-    
     res.redirect('/players/'+ playerName)
 }
 
