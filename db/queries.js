@@ -64,6 +64,12 @@ async function getPlayerByName(playerName)
     const { rows } = await pool.query(`Select * FROM players where LOWER(username) = LOWER($1)`, [playerName])
     return rows
 }
+
+async function deletePlayer(playerName)
+{
+    await pool.query(`DELETE FROM players WHERE username = ($1)`, [playerName])
+    await pool.query(`DELETE FROM characters WHERE player = ($1)`, [playerName])
+}
 module.exports = {
     insertPlayer,
     getPlayers,
@@ -76,5 +82,6 @@ module.exports = {
     removeServerForPlayer,
     getCharacters,
     getCharacter,
-    getPlayerByName
+    getPlayerByName,
+    deletePlayer
 }

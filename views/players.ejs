@@ -5,16 +5,27 @@
 </head>
 
 <body>
-    <ul>
-        <% players.forEach((player)=> { %>
-            <li>Username: <%- player.username %>
-                    <% if(player.servers !=null){ %>Servers: <%- player.servers %>
-                            <% } %><a href="/<%= player.username %><%= route %>"><%- routeText %>
-                                        <%= player.username %></a></li>
+    <% if (locals.deletedPlayer) {%>
+        <%- include("partials/deleteSuccess.ejs") %>
+            <% } %>
+                <ul>
+                    <% players.forEach((player)=> { %>
+                        <li>Username: <%- player.username %>
+                                <% if(player.servers !=null){ %>Servers: <%- player.servers %>
+                                        <% } %><a href="/<%= player.username %><%= route %>"><%- routeText %>
+                                                    <%= player.username %></a>
+                                            <!-- <% if(locals.delete==true){ %> -->
+                                            <form style='display: inline;' method="get"
+                                                action="/<%= player.username %>/delete">
+                                                <button type="submit"
+                                                    onclick="return confirm('Are you sure you want to delete <%= player.username %>? Deleting this player will also delete their characters ')">Delete</button>
+                                            </form>
+                                            <!-- <% } %> -->
+                        </li>
 
-            <% }) %>
-    </ul>
-    <a href="/">Return Home</a>
+                        <% }) %>
+                </ul>
+                <a href="/">Return Home</a>
 </body>
 
 </html>

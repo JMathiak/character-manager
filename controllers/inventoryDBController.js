@@ -61,7 +61,8 @@ async function getPlayersAndServers(req, res){
         title: "Player List",
         players: rows,
         route: '/edit',
-        routeText: 'Edit Player'
+        routeText: 'Edit Player',
+        delete: true
     })
 }
 
@@ -77,7 +78,8 @@ async function getPlayers(req, res){
         title: 'Create Char - Player Select',
         players:rows,
         route: "/createCharacter",
-        routeText: 'Create Character For'
+        routeText: 'Create Character For',
+        delete: false
     })
 
 }
@@ -251,7 +253,18 @@ async function getCharacterList(req, res)
 //             })
 //         }
 //         console.log(req.body)
-// }]
+// }]\
+
+async function deletePlayer(req, res)
+{
+
+        let playerName = req.params.playerName
+        await db.deletePlayer(playerName)
+   
+       
+    
+    res.redirect('/players')
+}
 
 module.exports = {
     getHome,
@@ -261,6 +274,7 @@ module.exports = {
     postCharacterForm,
     createCharacter, validateCharacter,
     editPlayer, submitEditPlayer,
-    getCharacterList
+    getCharacterList,
+    deletePlayer
 
 }

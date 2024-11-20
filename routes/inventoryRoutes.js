@@ -52,7 +52,7 @@ invRouter.post("/:playerName/createCharacter", [validateCharacter], invDBControl
 invRouter.get("/:playerName/edit", invDBController.editPlayer)
 invRouter.post("/:playerName/edit", [validatePlayer] ,invDBController.submitEditPlayer)
 invRouter.get("/viewCharacters", invDBController.getCharacterList)
-// invRouter.get("/:playerName/delete",)
+invRouter.get("/:playerName/delete", invDBController.deletePlayer)
 // invRouter.get("/:playerName/:characterName/edit",)
 // invRouter.post("/:playerName/:characterName/edit",)
 // invRouter.get("/:playerName/:characterName/delete",)
