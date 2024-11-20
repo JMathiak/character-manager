@@ -62,7 +62,8 @@ async function getPlayersAndServers(req, res){
         players: rows,
         route: '/edit',
         routeText: 'Edit Player',
-        delete: true
+        delete: true,
+        deletedPlayer: req.params.deletedPlayer
     })
 }
 
@@ -263,7 +264,7 @@ async function deletePlayer(req, res)
    
        
     
-    res.redirect('/players')
+    res.redirect('/players/'+ playerName)
 }
 
 module.exports = {

@@ -40,7 +40,7 @@ const validatePlayer = [
 ]
 
 invRouter.get("/", invDBController.getHome)
-invRouter.get("/players", invDBController.getPlayersAndServers)
+invRouter.get("/players/:deletedPlayer?", invDBController.getPlayersAndServers)
 // invRouter.get("/characters",)
 invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {header: "Add a new", serverArr: servers, action:"createPlayer"})
