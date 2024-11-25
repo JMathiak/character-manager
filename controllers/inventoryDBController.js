@@ -250,7 +250,12 @@ async function deletePlayer(req, res)
         await db.deletePlayer(playerName)
    
      //Do I want to create a deletion success page that can be used for characters? And an edit success page?  
-    res.redirect('/players/'+ playerName)
+     res.render("changeSuccess",{
+        change: "Delete",
+        objectOfInterest: playerName,
+        // route: req.params.playerName + "/createCharacter",
+        // viewContent: "viewCharacters"
+    })
 }
 
 module.exports = {
@@ -259,7 +264,7 @@ module.exports = {
     getPlayersAndServers,
     getPlayers,
     postCharacterForm,
-    createCharacter, validateCharacter,
+    createCharacter,
     editPlayer, submitEditPlayer,
     getCharacterList,
     deletePlayer

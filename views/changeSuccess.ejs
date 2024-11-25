@@ -1,0 +1,15 @@
+<html>
+<title>
+    <%= change %> Success
+</title>
+
+<body>
+    <% if (change=='Delete' ) {%>
+        <%- include("partials/deleteSuccess.ejs") %>
+            <% }else if (change=='Edit' ) { %>
+                <%- include("partials/editSuccess.ejs") %>
+                    <% } %>
+
+</body>
+
+</html>
