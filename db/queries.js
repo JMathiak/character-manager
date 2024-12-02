@@ -16,6 +16,7 @@ async function getUsernames(){
 }
 async function getServers(username){
     const { rows } = await pool.query('SELECT server FROM players WHERE username = ($1)', [username])
+    console.log(rows)
     return rows
 }
 
@@ -70,6 +71,8 @@ async function deletePlayer(playerName)
     await pool.query(`DELETE FROM players WHERE username = ($1)`, [playerName])
     await pool.query(`DELETE FROM characters WHERE player = ($1)`, [playerName])
 }
+
+
 module.exports = {
     insertPlayer,
     getPlayers,

@@ -10,7 +10,7 @@
         <% characters.forEach((character)=> { %>
             <li>
                 <h2 style="margin: 0;"><%- character.charactername %> <a
-                            href="/<%= character.charactername %>/edit">Edit</a> <a
+                            href="/<%= character.player %>/<%= character.charactername %>/edit">Edit</a> <a
                             href="/<%= character.charactername %>/details">Details</a></h2>
                 Server: <%- character.server %>, Level: <%- character.level %>, Job: <%- character.job %>
 

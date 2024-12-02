@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>Edit Character</title>
+</head>
+
+<body>
+    <h1>Edit Character: <%= char.characterName %>
+    </h1>
+    <% if (locals.errors) {%>
+        <%- include("partials/errors.ejs") %>
+            <% } %>
+                <form action="/<%= char.player %>/<%= char.characterName %>/edit" method="POST">
+                    <label for="charName">Character Name:</label>
+                    <input type="text" id="charName" name="charName" value="<%= char.charactername %>" required><br>
+                    <p style="display: inline">Server</p>
+                    <% playersServers.forEach(server=> { %>
+                        <input type="radio" id="<%= server %>" name="server" value="<%= server %>" <%
+                            if(server==char.server){ %> checked <% } %>>
+                            <label for="<%= server %>">
+                                <%= server %>
+                            </label>
+                            <% }) %> <br>
+                                <p style="display: inline">Job: </p>
+                                <select name="jobs" id="jobs">
+                                    <% jobs.forEach(job=> { %>
+                                        <option value="<%= job %>" <% if(job==char.job){ %> selected <% } %>>
+                                                <%= job %>
+                                        </option>
+                                        <% }) %>
+                                </select><br>
+                                <label for="level">Level (1 - 300): </label>
+                                <input type="number" id="level" name="level" value="<%= char.level %>"> <br>
+                                <label for="combatPower">Combat Power: </label>
+                                <input type="number" name="combatPower" id="combatPower"
+                                    value="<%= char.combatpower %>"><br>
+                                <input type="submit" value="Submit">
+                </form>
+
+</body>
+
+</html>

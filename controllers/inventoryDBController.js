@@ -6,6 +6,8 @@ let jobs = [	"Hero", "Dark Knight", "Paladin", "Bishop", "Arch Mage (Fire & Pois
     "Hoyoung", "Lara", "Lynn", "Zero", "Kinesis", "Dawn Warrior", "Night Walker", "Wind Archer", "Blaze Wizard", "Thunder Breaker"]
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
 function getHome(req, res){
+    db.getCharacter('Safalin')
+    db.getServers('Shua')
     res.render('index')
 }
 
@@ -258,6 +260,33 @@ async function deletePlayer(req, res)
     })
 }
 
+
+async function editCharacter(req, res){
+    let character = await db.getCharacter(req.params.characterName)
+    /*
+rows [
+  {
+    charactername: 'Safalin',
+    player: 'Shua',
+    job: 'Buccaneer',        
+    level: 285,
+    combatpower: 200000000,  
+    server: 'Kronos'
+  }
+]
+
+    */
+    let char = character[0]
+    let serverObjArr = await db.getServers(char.player)
+    let servers = []
+    serverObjArr.forEach((server)=>{
+        servers.push(server.server)
+    })
+    res.render("editCharacters", {header: "Edit", char: char, playersServers: servers, jobs: jobs })
+    
+}
+
+
 module.exports = {
     getHome,
     createPlayer,
@@ -267,6 +296,7 @@ module.exports = {
     createCharacter,
     editPlayer, submitEditPlayer,
     getCharacterList,
-    deletePlayer
+    deletePlayer,
+    editCharacter
 
 }
