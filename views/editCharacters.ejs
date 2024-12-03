@@ -10,7 +10,7 @@
     <% if (locals.errors) {%>
         <%- include("partials/errors.ejs") %>
             <% } %>
-                <form action="/<%= char.player %>/<%= char.characterName %>/edit" method="POST">
+                <form action="/<%= char.player %>/<%= char.charactername %>/edit" method="POST">
                     <label for="charName">Character Name:</label>
                     <input type="text" id="charName" name="charName" value="<%= char.charactername %>" required><br>
                     <p style="display: inline">Server</p>

@@ -15,20 +15,22 @@ const { Client } = require('pg');
 
 const SQL = `
 CREATE TABLE IF NOT EXISTS characters (
-characterName VARCHAR(12) PRIMARY KEY,
-player VARCHAR(15),
-job VARCHAR(30),
-level SMALLINT,
-combatPower INT,
-server VARCHAR(8)
+Characterid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Charactername VARCHAR(12),
+PlayerId SMALLINT,
+Job VARCHAR(30),
+Level SMALLINT,
+CombatPower INT,
+Server VARCHAR(8)
 )
 `;
 
 const SQLPlayers = `
 CREATE TABLE IF NOT EXISTS players (
-username VARCHAR(15),
-server VARCHAR(8),
-PRIMARY KEY(username, server)
+Playerid int NOT NULL,
+Username VARCHAR(15),
+Server VARCHAR(8),
+PRIMARY KEY(Playerid, Server)
 )
 `;
 
@@ -51,3 +53,12 @@ async function main() {
   }
   
   main();
+
+  /*
+--> Not auto increment, generate unique random number 1 to 1m
+insert that to player table 
+
+SELECT Playerid from players
+iterate 
+
+  */

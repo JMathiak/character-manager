@@ -5,10 +5,11 @@ let jobs = [	"Hero", "Dark Knight", "Paladin", "Bishop", "Arch Mage (Fire & Pois
     "Mechanic", "Battle Mage", "Demon Slayer", "Demon Avenger", "Wild Hunter", "Xenon", "Blaster", "Mercedes", "Aran", "Phantom", "Luminous", "Evan", "Shade", "Kanna", "Hayato", "Angelic Buster", "Kaiser", "Cadena", "Kain", "Ark", "Illium", "Adele", "Khali", 
     "Hoyoung", "Lara", "Lynn", "Zero", "Kinesis", "Dawn Warrior", "Night Walker", "Wind Archer", "Blaze Wizard", "Thunder Breaker"]
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
-function getHome(req, res){
-    db.getCharacter('Safalin')
-    db.getServers('Shua')
+async function getHome(req, res){
+
+    console.log(await db.getLastPlayerId())
     res.render('index')
+    
 }
 
 async function createPlayer(req, res){
@@ -23,6 +24,12 @@ async function createPlayer(req, res){
         })
     }
     //let servers = await db.getServers(req.params.playerName)
+    let maxIdRow = await db.getLastPlayerId()
+    let playerId = 1
+    if(maxIdRow[0].max != null)
+    {
+        playerId = maxIdRow[0].max + 1;
+    }
     let username = req.body.username
     let userServers  = []
     if(typeof req.body.server  === 'string' || req.body.server instanceof String)
@@ -36,7 +43,7 @@ async function createPlayer(req, res){
         }
     console.log(userServers)
         for(const server of userServers){
-            await db.insertPlayer(username, server)
+            await db.insertPlayer(playerId, username, server)
         }
   
    
@@ -109,8 +116,10 @@ async function createCharacter (req, res){
                 jobs: jobs,
             })
         }
-       
-        await db.insertCharacter(req.body, req.params.playerName)
+        let playerIdRow = await db.getPlayerId(req.params.playerName)
+        let playerId = playerIdRow[0].playerid
+        console.log(playerId)
+        await db.insertCharacter(req.body, playerId)
         res.render("successAdded",{
             contentAdded: "Character",
             playerName: req.params.playerName,
@@ -286,6 +295,22 @@ rows [
     
 }
 
+async function submitEditCharacter(req, res){
+    /*
+    {
+  charName: 'Safalin',
+  server: 'Kronos',
+  jobs: 'Buccaneer',
+  level: '285',
+  combatPower: '200000000'
+}
+    */
+    let originalName = req.params.characterName
+    let originalCharacter = await db.getCharacter(originalName)
+    let edits = req.body
+
+}
+
 
 module.exports = {
     getHome,
@@ -297,6 +322,6 @@ module.exports = {
     editPlayer, submitEditPlayer,
     getCharacterList,
     deletePlayer,
-    editCharacter
+    editCharacter, submitEditCharacter
 
 }

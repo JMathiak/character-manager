@@ -1,13 +1,28 @@
 const pool = require('./pool')
 
-async function insertPlayer(username, server)
+async function getLastPlayerId()
 {
-      await pool.query('INSERT INTO players (username, server) VALUES ($1, $2)', [username, server])
+    const { rows } = await pool.query(`SELECT max(Playerid) FROM players`)
+    console.log('id', rows)
+    return rows
+}
+
+
+async function insertPlayer(playerId, username, server)
+{
+      await pool.query('INSERT INTO players (playerId, username, server) VALUES ($1, $2, $3)', [playerId, username, server])
     
 }
 
 async function getPlayers(){
     const { rows } = await pool.query(`SELECT username, STRING_AGG(server,', ') AS servers FROM players GROUP BY username`)
+    return rows
+}
+
+async function getPlayerId(playerName)
+{
+    const { rows } = await pool.query(`SELECT DISTINCT PlayerId FROM players WHERE username = ($1)`, [playerName])
+    console.log('opla', rows)
     return rows
 }
 async function getUsernames(){
@@ -20,9 +35,9 @@ async function getServers(username){
     return rows
 }
 
-async function insertCharacter(body, playerName){
+async function insertCharacter(body, playerId){
    
-        await pool.query('INSERT INTO characters (charactername, player, job, level, combatpower, server) VALUES ($1, $2, $3, $4, $5, $6)', [body.charName, playerName, body.jobs, body.level, body.combatPower, body.servers])
+        await pool.query('INSERT INTO characters (charactername, Playerid, job, level, combatpower, server) VALUES ($1, $2, $3, $4, $5, $6)', [body.charName, playerId, body.jobs, body.level, body.combatPower, body.servers])
        
 }
 
@@ -74,12 +89,14 @@ async function deletePlayer(playerName)
 
 
 module.exports = {
+    getLastPlayerId,
     insertPlayer,
     getPlayers,
     getUsernames,
     getServers,
     insertCharacter,
     getPlayer,
+    getPlayerId,
     getCharacterCountByServer,
     updatePlayerName,
     removeServerForPlayer,

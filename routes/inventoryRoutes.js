@@ -54,7 +54,7 @@ invRouter.post("/:playerName/edit", [validatePlayer] ,invDBController.submitEdit
 invRouter.get("/viewCharacters", invDBController.getCharacterList)
 invRouter.get("/:playerName/delete", invDBController.deletePlayer)
 invRouter.get("/:playerName/:characterName/edit", invDBController.editCharacter)
-// invRouter.post("/:playerName/:characterName/edit",)
+invRouter.post("/:playerName/:characterName/edit", invDBController.submitEditCharacter)
 // invRouter.get("/:playerName/:characterName/delete",)
 // invRouter.get("/search",)
 
