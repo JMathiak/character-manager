@@ -258,14 +258,17 @@ async function deletePlayer(req, res)
 {
 
         let playerName = req.params.playerName
-        await db.deletePlayer(playerName)
+        let playerId = await db.getPlayerId(playerName)
+        let pID = playerId[0].playerid
+        await db.deletePlayer(pID)
    
-     //Do I want to create a deletion success page that can be used for characters? And an edit success page?  
+    //  //Do I want to create a deletion success page that can be used for characters? And an edit success page?  
      res.render("changeSuccess",{
         change: "Delete",
         objectOfInterest: playerName,
         // route: req.params.playerName + "/createCharacter",
-        // viewContent: "viewCharacters"
+        viewContent: "players",
+        prevContent: "Players"
     })
 }
 

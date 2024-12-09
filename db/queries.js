@@ -81,10 +81,16 @@ async function getPlayerByName(playerName)
     return rows
 }
 
-async function deletePlayer(playerName)
+async function deletePlayer(playerID)
 {
-    await pool.query(`DELETE FROM players WHERE username = ($1)`, [playerName])
-    await pool.query(`DELETE FROM characters WHERE player = ($1)`, [playerName])
+    await pool.query(`DELETE FROM players WHERE playerid = ($1)`, [playerID])
+    await pool.query(`DELETE FROM characters WHERE playerid = ($1)`, [playerID])
+}
+
+async function getPlayerId(playerName)
+{
+    const { rows } = await pool.query(`SELECT playerid FROM players WHERE username = ($1)`, [playerName])
+    return rows
 }
 
 
@@ -103,5 +109,6 @@ module.exports = {
     getCharacters,
     getCharacter,
     getPlayerByName,
-    deletePlayer
+    deletePlayer,
+    getPlayerId
 }
