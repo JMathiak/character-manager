@@ -52,7 +52,7 @@ async function createPlayer(req, res){
         contentAdded: "Player",
         playerName: req.params.playerName,
         route: "/createPlayer",
-        viewContent: "/players"
+        viewContent: "players"
     })
 
 }
