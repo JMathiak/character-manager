@@ -123,7 +123,7 @@ async function createCharacter (req, res){
         res.render("successAdded",{
             contentAdded: "Character",
             playerName: req.params.playerName,
-            route: req.params.playerName + "/createCharacter",
+            route: "createCharacter",
             viewContent: "viewCharacters"
         })
   
