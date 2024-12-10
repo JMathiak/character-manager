@@ -1,5 +1,6 @@
 const { Router } = require('express')
-const invDBController = require("../controllers/inventoryDBController.js")
+const playerController = require("../controllers/playerController.js")
+const characterController = require("../controllers/characterController.js")
 const {body, validationResult } = require('express-validator')
 const invRouter = Router()
 const db = require("../db/queries")
@@ -39,27 +40,36 @@ const validatePlayer = [
     })
 ]
 
-invRouter.get("/", invDBController.getHome)
-invRouter.get("/players/:deletedPlayer?", invDBController.getPlayersAndServers)
+invRouter.get("/", (req, res) =>{
+    res.render("index")
+})
+invRouter.get("/players/:deletedPlayer?", playerController.getPlayersAndServers)
 // invRouter.get("/characters",)
 invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {header: "Add a new", serverArr: servers, action:"createPlayer"})
 })
-invRouter.post("/createPlayer", [validatePlayer] ,invDBController.createPlayer)
-invRouter.get("/createCharacter/selectPlayer", invDBController.getPlayers)
-invRouter.get("/:playerName/createCharacter", invDBController.postCharacterForm)
-invRouter.post("/:playerName/createCharacter", [validateCharacter], invDBController.createCharacter)
-invRouter.get("/:playerName/edit", invDBController.editPlayer)
-invRouter.post("/:playerName/edit", [validatePlayer] ,invDBController.submitEditPlayer)
-invRouter.get("/viewCharacters", invDBController.getCharacterList)
-invRouter.get("/:playerName/delete", invDBController.deletePlayer)
-invRouter.get("/:playerName/:characterName/edit", invDBController.editCharacter)
-invRouter.post("/:playerName/:characterName/edit", invDBController.submitEditCharacter)
+invRouter.post("/createPlayer", [validatePlayer] ,playerController.createPlayer)
+invRouter.get("/createCharacter/selectPlayer", playerController.getPlayers)
+invRouter.get("/:playerName/createCharacter", characterController.postCharacterForm)
+invRouter.post("/:playerName/createCharacter", [validateCharacter], characterController.createCharacter)
+invRouter.get("/:playerName/edit", playerController.editPlayer)
+invRouter.post("/:playerName/edit", [validatePlayer] ,playerController.submitEditPlayer)
+invRouter.get("/viewCharacters", characterController.getCharacterList)
+invRouter.post("/:playerName/delete", playerController.deletePlayer)
+invRouter.get("/:playerName/:characterName/edit", characterController.editCharacter)
+invRouter.post("/:playerName/:characterName/edit", characterController.submitEditCharacter)
 // invRouter.get("/:playerName/:characterName/delete",)
 // invRouter.get("/search",)
 
 
+/*
+/character/create
+/character/edit/:charID
+/player/create
+/player/edit/:playerId
 
+
+*/
 
 module.exports = invRouter;
 
