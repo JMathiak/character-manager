@@ -69,7 +69,7 @@ async function getPlayersAndServers(req, res){
     res.render('./players',{
         title: "Player List",
         players: rows,
-        route: '/edit',
+        route: 'edit',
         routeText: 'Edit Player',
         delete: true,
         deletedPlayer: req.params.deletedPlayer
@@ -96,12 +96,12 @@ async function getPlayers(req, res){
 
 
 async function editPlayer(req, res){
-    let player = await db.getPlayer(req.params.playerName)
+    let player = await db.getPlayerByID(req.params.id)
     let serverArr = player[0].servers.split(", ")
     let serverCharacters = {}
     for (const server of serverArr)
     {
-        let count = await db.getCharacterCountByServer(req.params.playerName, server)
+        let count = await db.getCharacterCountByServer(req.params.id, server)
         console.log(count)
         serverCharacters[server] = parseInt(count[0].count)
     }
@@ -196,9 +196,9 @@ async function submitEditPlayer(req, res){
 async function deletePlayer(req, res)
 {
 
-        let playerName = req.params.playerName
-        let playerId = await db.getPlayerId(playerName)
-        let pID = playerId[0].playerid
+        let pID = req.params.id
+        let playerNames = await db.getPlayerName(pID)
+        let playerName = playerNames[0].username
         await db.deletePlayer(pID)
    
     //  //Do I want to create a deletion success page that can be used for characters? And an edit success page?  

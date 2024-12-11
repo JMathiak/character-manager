@@ -15,7 +15,7 @@ async function insertPlayer(playerId, username, server)
 }
 
 async function getPlayers(){
-    const { rows } = await pool.query(`SELECT username, STRING_AGG(server,', ') AS servers FROM players GROUP BY username`)
+    const { rows } = await pool.query(`SELECT playerid, username, STRING_AGG(server,', ') AS servers FROM players GROUP BY playerid, username`)
     return rows
 }
 
@@ -46,9 +46,15 @@ async function getPlayer(playerName){
     return rows
 }
 
-async function getCharacterCountByServer(playerName, server)
+async function getPlayerByID(playerID){
+    const { rows } = await pool.query(`SELECT playerid ,username, STRING_AGG(server,', ') AS servers FROM players WHERE playerid = ($1) GROUP BY playerid, username `, [playerID])
+    return rows
+}
+
+
+async function getCharacterCountByServer(playerID, server)
 {
-    const { rows } = await pool.query(`SELECT COUNT(*) FROM characters WHERE player = ($1) AND server = ($2)`, [playerName, server])
+    const { rows } = await pool.query(`SELECT COUNT(*) FROM characters WHERE playerid = ($1) AND server = ($2)`, [playerID, server])
     return rows
 }
 
@@ -93,6 +99,11 @@ async function getPlayerId(playerName)
     return rows
 }
 
+async function getPlayerName(playerID)
+{
+    const { rows } = await pool.query(`SELECT username FROM players WHERE playerid = ($1)`, [playerID])
+    return rows
+}
 
 module.exports = {
     getLastPlayerId,
@@ -101,7 +112,7 @@ module.exports = {
     getUsernames,
     getServers,
     insertCharacter,
-    getPlayer,
+    getPlayer, getPlayerByID, 
     getPlayerId,
     getCharacterCountByServer,
     updatePlayerName,
@@ -110,5 +121,6 @@ module.exports = {
     getCharacter,
     getPlayerByName,
     deletePlayer,
-    getPlayerId
+    getPlayerId,
+    getPlayerName
 }

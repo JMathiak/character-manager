@@ -12,11 +12,11 @@
                     <% players.forEach((player)=> { %>
                         <li>Username: <%- player.username %>
                                 <% if(player.servers !=null){ %>Servers: <%- player.servers %>
-                                        <% } %><a href="/<%= player.username %><%= route %>"><%- routeText %>
+                                        <% } %><a href="players/<%= route %>/<%= player.playerid %>"><%- routeText %>
                                                     <%= player.username %></a>
                                             <!-- <% if(locals.delete==true){ %> -->
                                             <form style='display: inline;'
-                                                action="/<%= player.username %>/delete?_method=DELETE" method="POST">
+                                                action="/delete/<%= player.playerid %>?_method=DELETE" method="POST">
                                                 <button type="submit"
                                                     onclick="return confirm('Are you sure you want to delete <%= player.username %>? Deleting this player will also delete their characters ')">Delete</button>
                                             </form>
