@@ -9,5 +9,8 @@ app.use("/", invRouter)
 const playerRouter = require('./routes/playerRoutes')
 app.use("/players", playerRouter)
 
+const characterRouter = require('./routes/characterRoutes')
+app.use("/character", characterRouter)
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Express is now listening on port ${PORT}`))

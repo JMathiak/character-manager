@@ -3,8 +3,8 @@ const playerController = require("../controllers/playerController.js")
 const { body, validationResult} = require('express-validator')
 
 
-
 const playerRouter = Router()
+
 const lengthErr = "must be between 4 and 15 characters"
 const validatePlayer = [
     body('username').trim()

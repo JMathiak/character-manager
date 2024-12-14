@@ -6,35 +6,57 @@ let jobs = [	"Hero", "Dark Knight", "Paladin", "Bishop", "Arch Mage (Fire & Pois
     "Hoyoung", "Lara", "Lynn", "Zero", "Kinesis", "Dawn Warrior", "Night Walker", "Wind Archer", "Blaze Wizard", "Thunder Breaker"]
 let servers = ["Kronos", "Hyperion", "Bera", "Scania", "Aurora", "Elysium"]
 
+async function getPlayers(req, res){
+    let rows = await db.getPlayers()
+    console.log('Players', rows)
+    rows.forEach(player => {
+        let serverArr = player.servers.split(",")
+        console.log(serverArr)
+        player.servers = serverArr
+    })
+    res.render('players',{
+        title: 'Create Char - Player Select',
+        players:rows,
+        route: "create",
+        routeText: 'Create Character For',
+        delete: false
+    })
 
+}
 
 async function postCharacterForm(req, res){
-    let playerName = req.params.playerName
-    let servers = await db.getServers(playerName)
-    console.log(servers)
-    res.render('characterForm', {playerName: playerName, servers: servers, jobs: jobs})
+    let playerId = req.params.playerId
+    let servers = await db.getServers(playerId)
+    let playerName = await db.getPlayerName(playerId)
+    let pName = playerName[0].username
+    console.log(pName, playerId)
+    res.render('characterForm', {playerName: pName, playerId: playerId,servers: servers, jobs: jobs})
 }
 
 
 async function createCharacter (req, res){
+    let playerId = req.params.playerId
+    let playerName = await db.getPlayerName(playerId)
+    let pName = playerName[0].username
+    console.log(playerId, playerName, pName)
     const errors = validationResult(req)
         if(!errors.isEmpty()){
-            let servers = await db.getServers(req.params.playerName)
+            let servers = await db.getServers(req.params.playerId)
             return res.status(400).render('characterForm',{
                 title: "Create Character",
                 errors: errors.array(),
-                playerName: req.params.playerName,
+                playerId: req.params.playerId,
+                playerName: pName,
                 servers: servers,
                 jobs: jobs,
             })
         }
-        let playerIdRow = await db.getPlayerId(req.params.playerName)
-        let playerId = playerIdRow[0].playerid
+    
         console.log(playerId)
         await db.insertCharacter(req.body, playerId)
         res.render("successAdded",{
             contentAdded: "Character",
-            playerName: req.params.playerName,
+            playerName: pName,
             route: "createCharacter",
             viewContent: "viewCharacters"
         })
@@ -105,6 +127,7 @@ async function submitEditCharacter(req, res){
 
 
 module.exports = {
+    getPlayers,
     postCharacterForm,
     createCharacter,
     getCharacterList,

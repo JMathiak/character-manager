@@ -12,7 +12,7 @@
                     <% players.forEach((player)=> { %>
                         <li>Username: <%- player.username %>
                                 <% if(player.servers !=null){ %>Servers: <%- player.servers %>
-                                        <% } %><a href="players/<%= route %>/<%= player.playerid %>"><%- routeText %>
+                                        <% } %><a href="<%= route %>/<%= player.playerid %>"><%- routeText %>
                                                     <%= player.username %></a>
                                             <!-- <% if(locals.delete==true){ %> -->
                                             <form style='display: inline;'

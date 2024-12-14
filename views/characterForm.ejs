@@ -9,7 +9,7 @@
     <% if (locals.errors) {%>
         <%- include("partials/errors.ejs") %>
             <% } %>
-                <form action="/<%= playerName %>/createCharacter" method="POST">
+                <form action="<%= playerId %>" method="POST">
                     <h2>Creating Character for: <%= playerName %>
                     </h2>
                     <label for="charName">Character Name:</label>

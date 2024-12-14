@@ -69,30 +69,13 @@ async function getPlayersAndServers(req, res){
     res.render('./players',{
         title: "Player List",
         players: rows,
-        route: 'edit',
+        route: 'players/edit',
         routeText: 'Edit Player',
         delete: true,
         deletedPlayer: req.params.deletedPlayer
     })
 }
 
-async function getPlayers(req, res){
-    let rows = await db.getPlayers()
-    console.log('Players', rows)
-    rows.forEach(player => {
-        let serverArr = player.servers.split(",")
-        console.log(serverArr)
-        player.servers = serverArr
-    })
-    res.render('players',{
-        title: 'Create Char - Player Select',
-        players:rows,
-        route: "/createCharacter",
-        routeText: 'Create Character For',
-        delete: false
-    })
-
-}
 
 
 async function editPlayer(req, res){
@@ -219,7 +202,6 @@ module.exports = {
     getHome,
     createPlayer,
     getPlayersAndServers,
-    getPlayers,
     editPlayer, submitEditPlayer,
     deletePlayer
 }

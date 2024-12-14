@@ -49,7 +49,7 @@ invRouter.get("/createPlayer", (req, res)=>{
     res.render("playerForm", {header: "Add a new", serverArr: servers, action:"createPlayer"})
 })
 invRouter.post("/createPlayer", [validatePlayer] ,playerController.createPlayer)
-invRouter.get("/createCharacter/selectPlayer", playerController.getPlayers)
+// invRouter.get("/createCharacter/selectPlayer", playerController.getPlayers)
 invRouter.get("/:playerName/createCharacter", characterController.postCharacterForm)
 invRouter.post("/:playerName/createCharacter", [validateCharacter], characterController.createCharacter)
 invRouter.get("/:playerName/edit", playerController.editPlayer)

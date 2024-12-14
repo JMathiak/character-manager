@@ -29,8 +29,8 @@ async function getUsernames(){
     const { rows } = await pool.query('SELECT DISTINCT username FROM players')
     return rows
 }
-async function getServers(username){
-    const { rows } = await pool.query('SELECT server FROM players WHERE username = ($1)', [username])
+async function getServers(pID){
+    const { rows } = await pool.query('SELECT server FROM players WHERE playerid = ($1)', [pID])
     console.log(rows)
     return rows
 }
